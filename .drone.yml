@@ -1,0 +1,43 @@
+# @see https://docs.drone.io/user-guide/pipeline/
+kind: pipeline
+name: drone.io example
+
+steps:
+  - name: yarn install
+    image: node
+    commands:
+      - yarn install
+
+  - name: push
+    image: node
+    commands:
+      - echo "push event"
+    when:
+      event:
+        - push
+
+  - name: pull request
+    image: node
+    commands:
+      - echo "pull request event"
+    when:
+      event:
+        - pull-request
+
+  - name: master
+    image: node
+    commands:
+      - echo master
+    when:
+      branch:
+        - master
+
+  - name: commit message
+    image: alpine:3.10
+    commands:
+      - ./message-driven.sh
+
+# default trigger is `pull request` and `push`?
+trigger:
+  event:
+    - push
