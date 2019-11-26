@@ -36,8 +36,9 @@ steps:
     image: node
     commands:
       - echo "tagged"
-    event:
-      - tag
+    trigger:
+      event:
+        - tag
 
   - name: commit message
     image: alpine:3.10
