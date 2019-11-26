@@ -8,7 +8,7 @@ steps:
     commands:
       - yarn install
 
-  - name: push
+  - name: push event
     image: node
     commands:
       - echo "push event"
@@ -16,7 +16,7 @@ steps:
       event:
         - push
 
-  - name: pull request
+  - name: pull request event
     image: node
     commands:
       - echo "pull request event"
@@ -24,7 +24,7 @@ steps:
       event:
         - pull-request
 
-  - name: master
+  - name: only run master branch
     image: node
     commands:
       - echo master
@@ -38,6 +38,6 @@ steps:
       - ./message-driven.sh
 
 # default trigger is `pull request` and `push`?
-trigger:
-  event:
-    - push
+# trigger:
+#   event:
+#     - push
