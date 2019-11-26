@@ -38,8 +38,6 @@ steps:
       - echo "tagged"
     when:
       event: tag
-      branch:
-        - master
 
   - name: commit message
     image: alpine:3.10
