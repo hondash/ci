@@ -32,6 +32,16 @@ steps:
       branch:
         - master
 
+  - name: only run tagged into master branch
+    image: node
+    commands:
+      - echo "tagged to master"
+    when:
+      branch:
+        - master
+    event:
+      - tag
+
   - name: commit message
     image: alpine:3.10
     commands:
