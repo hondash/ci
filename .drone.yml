@@ -32,13 +32,10 @@ steps:
       branch:
         - master
 
-  - name: only run tagged into master branch
+  - name: only run tagged
     image: node
     commands:
-      - echo "tagged to master"
-    when:
-      branch:
-        - master
+      - echo "tagged"
     event:
       - tag
 
@@ -48,6 +45,6 @@ steps:
       - ./message-driven.sh
 
 # default trigger is `pull request` and `push`?
-# trigger:
-#   event:
-#     - push
+trigger:
+  event:
+    - push
