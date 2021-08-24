@@ -6,10 +6,10 @@ workflows:
   always-run:
     jobs:
       - path-filtering/filter:
-        name: check-updated-files
-        mapping: |
-          A/.* A-job true
-          B/.* B-job true
-        base-revision: master
-        config-path: .circleci/continue_config.yml
-
+          name: check-updated-files
+          # <regex path-to-test> <parameter-to-set> <value-of-pipeline-parameter>
+          mapping: |
+            packages/A/.* A-job true
+            pacakges/B/.* B-job true
+          base-revision: develop
+          config-path: .circleci/continue_config.yml

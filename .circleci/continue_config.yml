@@ -1,7 +1,5 @@
 version: 2.1
 
-# the default pipeline parameters, which will be updated according to
-# the results of the path-filtering orb
 parameters:
   A-job:
     type: boolean
@@ -10,20 +8,48 @@ parameters:
     type: boolean
     default: false
 
-# here we specify our workflows, most of which are conditionally
-# executed based upon pipeline parameter values. Each workflow calls a
-# specific job defined above, in the jobs section.
+jobs:
+  AAA:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - run: echo Hello, A
+  BBB:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - run: echo Hello, B
+  AandB:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - run: echo Hello, A and B
+  no-job:
+    docker:
+      - image: circleci/node:16
+    steps:
+      - run:
+          name: any packages are not updated
+          command: echo ''
+
+
 workflows:
   AAAAAA:
     when: << pipeline.parameters.A-job >>
     jobs:
-      - run: echo Hello, A
+      - AAA
   BBBBB:
     when: << pipeline.parameters.B-job >>
     jobs:
-      - run: echo Hello, B
+      - BBB
   run-integration-tests:
     when:
       or: [<< pipeline.parameters.A-job >>, << pipeline.parameters.B-job >>]
     jobs:
-      - run: echo A or B
+      - AandB
+  no-job:
+    when:
+      not:
+        or: [<< pipeline.parameters.A-job >>, << pipeline.parameters.B-job >>]
+    jobs:
+      - no-job
